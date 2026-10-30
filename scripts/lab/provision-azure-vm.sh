@@ -34,6 +34,13 @@ LAB_SHUTDOWN_EMAIL="${LAB_SHUTDOWN_EMAIL:-vitor.veloso@inminds.com.br}"
 
 TAGS="projeto=jarvis ambiente=lab dono=vitor.veloso decisao=DT-004"
 
+# Assinatura: "Microsoft Partner Success Core Benefits". A MPSCB 20261023 esta em
+# estado Warned (somente leitura) desde pelo menos 2026-10-30 e falha com
+# ReadOnlyDisabledSubscription.
+LAB_SUBSCRIPTION="${LAB_SUBSCRIPTION:-85ca7304-59e2-42e8-bd77-077767783e96}"
+echo ">> Assinatura $LAB_SUBSCRIPTION"
+az account set -s "$LAB_SUBSCRIPTION"
+
 echo ">> Resource group $LAB_RG em $LAB_LOCATION"
 az group create -n "$LAB_RG" -l "$LAB_LOCATION" --tags $TAGS -o none
 
