@@ -32,8 +32,8 @@
 | ID | Item | Status | Inicio | Fim | Notas |
 |---|---|---|---|---|---|
 | BL-006 | Definir o objetivo da InMinds com este fork | ✅ Entregue | 2026-10-30 | 2026-10-30 | DN-001: estudo + base B2B sem biometria |
-| BL-014 | Provisionar VM de laboratorio isolada (Azure, RG proprio, Docker, desligavel) e chaves de API proprias do lab | 🔄 Em andamento | 2026-10-30 | — | DT-004. Nao roda no PC do Vitor nem na VPS de producao |
-| BL-008 | Subir backend e frontend no lab via `docker compose` e validar `/api/health` e `/api/services` | 🔄 Em andamento | 2026-10-30 | — | Compose e Dockerfile do frontend prontos no repo. Depende de BL-014 para executar |
+| BL-014 | Provisionar VM de laboratorio isolada (Azure, RG proprio, Docker, desligavel) | ✅ Entregue | 2026-10-30 | 2026-10-30 | `vm-jarvis-lab` em `rg-inminds-jarvis-lab`, Brazil South, B4ms, IP 20.226.2.127. Assinatura Partner Success Core Benefits. Portas 22/3000/8000 so para IP 177.189.20.168. Auto-shutdown 23:00 BRT. Chaves de API do lab ainda vazias (BL-009) |
+| BL-008 | Subir backend e frontend no lab via `docker compose` e validar `/api/health` e `/api/services` | ✅ Entregue | 2026-10-30 | 2026-10-30 | Health OK, frontend 200, 18 servicos reportados como nao configurados. Dockerfile do backend precisou migrar de pip para `uv sync --frozen` (commit b3a1119) |
 | BL-009 | Inventario de chaves necessarias e custo por consulta (Browser Use, Exa, Convex, Laminar, SuperMemory). PimEyes fora | ⏳ Pendente | — | — | Alimenta a viabilidade da Fase 2 |
 | BL-010 | Rodar `/inm-dna-handoff` e criar o Claude.ai Project do JARVIS | 🔄 Em andamento | 2026-10-30 | — | Primeiro espelho |
 | BL-011 | Mapear o orquestrador (`backend/agents/orchestrator.py`, `pipeline.py`): tiers, paralelismo, timeouts, streaming para Convex | ⏳ Pendente | — | — | Entregavel: documento curto em `.memory/` com o padrao extraido |
@@ -58,6 +58,8 @@
 | Bloco | Inicio | Fim | Duracao | Itens |
 |---|---|---|---|---|
 | Clone + DNA setup | 2026-10-30 00:32 | 2026-10-30 00:50 | ~20 min | clone, leitura de docs, .memory/, CLAUDE.md, .agents/ |
+| Handoff + entendimento | 2026-10-30 00:50 | 2026-10-30 01:35 | ~45 min | handoff, leitura de PRD/arquitetura/pipeline, DN-001, DN-002, DT-003 a DT-005 |
+| Lab Azure | 2026-10-30 01:35 | 2026-10-30 02:20 | ~45 min | BL-014, BL-008: compose, Dockerfiles, script de provisionamento, VM, 2 builds |
 
 ---
 
