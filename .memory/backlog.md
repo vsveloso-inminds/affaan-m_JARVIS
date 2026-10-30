@@ -32,7 +32,8 @@
 | ID | Item | Status | Inicio | Fim | Notas |
 |---|---|---|---|---|---|
 | BL-006 | Definir o objetivo da InMinds com este fork | ✅ Entregue | 2026-10-30 | 2026-10-30 | DN-001: estudo + base B2B sem biometria |
-| BL-008 | Subir backend e frontend localmente e validar `/api/health` e `/api/services` | ⏳ Pendente | — | — | Backend sobe sem chaves, degrada por servico |
+| BL-014 | Provisionar VM de laboratorio isolada (Azure, RG proprio, Docker, desligavel) e chaves de API proprias do lab | 🔄 Em andamento | 2026-10-30 | — | DT-004. Nao roda no PC do Vitor nem na VPS de producao |
+| BL-008 | Subir backend e frontend no lab via `docker compose` e validar `/api/health` e `/api/services` | 🔄 Em andamento | 2026-10-30 | — | Compose e Dockerfile do frontend prontos no repo. Depende de BL-014 para executar |
 | BL-009 | Inventario de chaves necessarias e custo por consulta (Browser Use, Exa, Convex, Laminar, SuperMemory). PimEyes fora | ⏳ Pendente | — | — | Alimenta a viabilidade da Fase 2 |
 | BL-010 | Rodar `/inm-dna-handoff` e criar o Claude.ai Project do JARVIS | 🔄 Em andamento | 2026-10-30 | — | Primeiro espelho |
 | BL-011 | Mapear o orquestrador (`backend/agents/orchestrator.py`, `pipeline.py`): tiers, paralelismo, timeouts, streaming para Convex | ⏳ Pendente | — | — | Entregavel: documento curto em `.memory/` com o padrao extraido |
@@ -44,8 +45,9 @@
 | ID | Item | Status | Inicio | Fim | Notas |
 |---|---|---|---|---|---|
 | EF-001 | Enriquecimento B2B por empresa/CNPJ: entrada textual, agentes em LinkedIn/site/Google/Exa, dossie da empresa e decisores | ⏳ Pendente | — | — | Especificar apos BL-011 e BL-013 |
-| EF-001.1 | Remover ou isolar `identification/` (MediaPipe, ArcFace, PimEyes) do caminho principal | ⏳ Pendente | — | — | Fica atras de flag, nunca no fluxo B2B |
-| EF-001.2 | Trocar a entrada "foto" por "empresa + nome do decisor" no frontend | ⏳ Pendente | — | — | — |
+| EF-001.1 | Remover do caminho de produto: `identification/` (facial, PimEyes), `agents/account_manager.py` (criacao de contas falsas), `agents/darkweb_agent.py` | ⏳ Pendente | — | — | Em lab continuam ligados (DT-003). No produto, removidos, nao escondidos |
+| EF-001.2 | Trocar a entrada "foto" por "empresa (CNPJ) + nome do decisor" no frontend | ⏳ Pendente | — | — | — |
+| EF-001.4 | Reescrever a lista de fontes para o Brasil: Receita (CNPJ/QSA), Jusbrasil, Diarios Oficiais, Reclame Aqui, noticias BR, LinkedIn BR, site da empresa. Internacionais atras de toggle do operador | ⏳ Pendente | — | — | DT-005 |
 | EF-001.3 | Avaliar Convex vs Supabase para a versao produto | ⏳ Pendente | — | — | Reabre DT-001 so nesta fase |
 | BL-007 | Avaliacao LGPD do fluxo B2B (dados de decisores sao pessoais, mesmo sem biometria) | ⏳ Pendente | — | — | Pre-requisito para qualquer uso com cliente. Ver DT-003 |
 

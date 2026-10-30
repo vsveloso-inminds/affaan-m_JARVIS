@@ -26,11 +26,23 @@
 - **Quando:** 2026-10-30
 - **Alternativas descartadas:** Fundir tudo num unico CLAUDE.md. Perde rastreabilidade do que e nosso e do que e deles.
 
-### DT-003 — Nenhum uso do pipeline facial fora de laboratorio ate avaliacao LGPD
-- **O que:** O fluxo rosto → PimEyes → dossie so roda com fotos de pessoas do time, com consentimento, em ambiente local. Nada de demo com terceiros, nada de deploy publico do backend com chaves reais.
-- **Por que:** Biometria facial e dado pessoal sensivel (LGPD art. 5, II e art. 11). Montar dossie de terceiro sem base legal e risco juridico e reputacional direto pra InMinds. O projeto nasceu num hackathon nos EUA, onde o contexto regulatorio e outro.
+### DT-003 — Pipeline completo liberado em laboratorio isolado. Restricoes valem para produto e cliente
+- **O que:** Em laboratorio (DT-004) o pipeline roda inteiro, sem restricao: facial, PimEyes, criacao autonoma de contas, dark web. Fora do laboratorio, ou seja, em qualquer uso com cliente, demo publica ou produto, nada disso entra sem a avaliacao LGPD (BL-007) e sem remover os modulos que violam termos de uso de plataformas (EF-001.1).
+- **Por que:** O Vitor decidiu em 2026-10-30 que o objetivo agora e aprender o maximo do que o projeto faz, e isso exige rodar tudo. O Claudin registrou a ressalva: biometria facial e dado sensivel (LGPD art. 5 II e art. 11), e o modulo `agents/account_manager.py` cria contas falsas em LinkedIn, X, Instagram e outros com emails descartaveis, o que viola termos de uso e gera passivo. O risco fica contido pelo isolamento do ambiente (DT-004), nao pela restricao de uso.
+- **Quando:** 2026-10-30 (revisada no mesmo dia; versao original restringia o facial a fotos do time)
+- **Alternativas descartadas:** Manter a restricao original. Impediria entender o pipeline de identificacao, que e metade do codigo.
+
+### DT-004 — Laboratorio roda em ambiente isolado, nunca em maquina pessoal nem na VPS de producao
+- **O que:** O JARVIS so roda numa VM dedicada de laboratorio, separada da `vm-inminds-hub-prd` (Coolify, `panel.inminds.com.br`) e de qualquer PC com dados pessoais. VM pode ser desligada quando nao estiver em uso. Chaves de API do lab sao chaves proprias do lab, nunca as de producao.
+- **Por que:** O Vitor apontou que o PC atual tem muita coisa pessoal. O Claudin acrescentou: o lab cria contas falsas, abre browsers automatizados em dezenas de sites e baixa modelos de visao. Isso nao pode compartilhar host, rede nem credenciais com Supabase, n8n e Evolution API de producao.
 - **Quando:** 2026-10-30
-- **Alternativas descartadas:** Nenhuma. Isso nao e negociavel ate o BL-007 fechar.
+- **Alternativas descartadas:** (a) Rodar no PC do Vitor: descartado por ele. (b) Rodar na VPS de producao via Coolify: mistura risco de lab com o que paga as contas. (c) GitHub Codespaces: sem persistencia barata e com limite de horas; serve de fallback se a VM demorar.
+
+### DT-005 — Fontes brasileiras como padrao, internacionais sob decisao do operador
+- **O que:** A lista de fontes dos agentes e reescrita para o Brasil: Receita Federal (CNPJ, QSA), Jusbrasil, Diarios Oficiais, Reclame Aqui, Google Noticias BR, LinkedIn BR, site da empresa. As fontes do projeto original (X, Instagram, TikTok, Reddit, GitHub, dark web) ficam disponiveis, mas desligadas por padrao, e o operador liga por consulta.
+- **Por que:** O projeto original e todo EUA. Para prospeccao B2B no Brasil, Receita e Jusbrasil valem mais que Instagram. Decisao do Vitor em 2026-10-30.
+- **Quando:** 2026-10-30
+- **Alternativas descartadas:** Manter as fontes originais e so acrescentar as brasileiras. Gasta browser pago em fonte que nao gera valor.
 
 ---
 
@@ -41,3 +53,8 @@
 - **Por que:** O valor reaproveitavel esta no orquestrador de agentes e no padrao de UI, nao no reconhecimento facial. O facial e o pedaco mais caro, mais fragil e com risco LGPD (DT-003). Enriquecimento B2B tem demanda direta no pipeline comercial da InMinds.
 - **Quando:** 2026-10-30. Decisao do Vitor.
 - **Alternativas descartadas:** (c) demo comercial para InSecurity aproveitando `HumanDetection/`. Fica como ideia (FT-003), nao e objetivo do fork.
+
+### DN-002 — Primeiro usuario e a propria InMinds, com abertura para virar oferta a clientes
+- **O que:** A Fase 2 e construida para o time comercial da InMinds usar em prospeccao. A arquitetura nao pode impedir que vire produto para cliente depois, mas nenhuma decisao de agora e tomada em funcao disso.
+- **Por que:** Validar com uso proprio antes de vender. Decisao do Vitor em 2026-10-30.
+- **Quando:** 2026-10-30

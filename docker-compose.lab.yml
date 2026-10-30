@@ -1,0 +1,51 @@
+# JARVIS — laboratorio isolado (DT-004)
+#
+# Uso na VM de lab:
+#   cp .env.lab.example .env.lab   # preencher chaves proprias do lab
+#   docker compose -f docker-compose.lab.yml --env-file .env.lab up -d --build
+#   curl http://localhost:8000/api/health
+#   curl http://localhost:8000/api/services
+#
+# O backend sobe sem nenhuma chave e reporta em /api/services o que esta ativo.
+# Convex e Browser Use sao servicos em nuvem: sem URL/chave, o frontend cai no
+# modo demo e os agentes de browser ficam desligados.
+#
+# Estado gerado em runtime (agent_credentials.json, pimeyes_cookies.json) fica
+# dentro do container e se perde no rebuild. Aceitavel em lab.
+
+name: jarvis-lab
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: jarvis-backend
+    restart: unless-stopped
+    env_file:
+      - .env.lab
+    environment:
+      JARVIS_ENV: ${JARVIS_ENV:-development}
+      JARVIS_FRONTEND_ORIGIN: ${JARVIS_FRONTEND_ORIGIN:-http://localhost:3000}
+      JARVIS_API_PORT: "8000"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/health', timeout=5).status==200 else 1)\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+        NEXT_PUBLIC_CONVEX_URL: ${NEXT_PUBLIC_CONVEX_URL:-}
+    container_name: jarvis-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy

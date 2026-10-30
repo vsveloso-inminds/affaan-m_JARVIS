@@ -1,0 +1,28 @@
+# Config do handoff de contexto — JARVIS
+# Gerado com defaults em 2026-10-30 pelo /inm-dna-handoff. Revisar antes do proximo ciclo.
+
+projeto:
+  label: JARVIS
+  nome_produto: JARVIS
+  grafias_anteriores: [SPECTER, CIRI, YC_hackathon]
+  cliente: InMinds Technology (uso interno, fork de estudo)
+  repo: https://github.com/vsveloso-inminds/affaan-m_JARVIS
+  upstream: https://github.com/affaan-m/JARVIS
+  deploy:
+    backend: GHCR (imagem Docker via GitHub Actions)
+    frontend: Vercel (via GitHub Actions, gate por VERCEL_TOKEN)
+  url_canonica: nao definida
+
+baseline:
+  # Base de comparacao do delta. Atualizar para o commit do ultimo handoff a cada ciclo.
+  commit: 4369c34
+  data: 2026-05-19
+  descricao: ultimo commit do upstream antes do fork InMinds
+
+grafia:
+  siglas_proibidas: []
+  identificadores_permitidos: [DT, DN, BL, EF, FT, API, LLM, CI, CD, SSE, LGPD, GHCR, YOLO, OSINT, HUD]
+
+verificacoes:
+  max_linhas: 800
+  git_status_limpo_exceto: [".memory/handoff/"]

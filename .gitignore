@@ -5,6 +5,7 @@
 .env
 .env.*
 !.env.example
+!.env.lab.example
 
 # Node / Next.js
 node_modules/
